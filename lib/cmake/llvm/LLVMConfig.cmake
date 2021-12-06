@@ -7,6 +7,9 @@ get_filename_component(LLVM_INSTALL_PREFIX "${LLVM_INSTALL_PREFIX}" PATH)
 get_filename_component(LLVM_INSTALL_PREFIX "${LLVM_INSTALL_PREFIX}" PATH)
 get_filename_component(LLVM_INSTALL_PREFIX "${LLVM_INSTALL_PREFIX}" PATH)
 
+# For finding self-installed Find*.cmake packages.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+
 set(LLVM_VERSION_MAJOR 14)
 set(LLVM_VERSION_MINOR 0)
 set(LLVM_VERSION_PATCH 0)
@@ -141,9 +144,17 @@ set(LLVM_ENABLE_ASSERTIONS OFF)
 
 set(LLVM_ENABLE_EH OFF)
 
+set(LLVM_ENABLE_FFI OFF)
+if(LLVM_ENABLE_FFI)
+  find_package(FFI)
+endif()
+
 set(LLVM_ENABLE_RTTI OFF)
 
-set(LLVM_ENABLE_TERMINFO 0)
+set(LLVM_ENABLE_TERMINFO OFF)
+if(LLVM_ENABLE_TERMINFO)
+  find_package(Terminfo)
+endif()
 
 set(LLVM_ENABLE_THREADS ON)
 
